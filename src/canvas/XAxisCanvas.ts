@@ -20,16 +20,17 @@ export class XAxisCanvas extends Canvas {
         let bar_offset = 0;
         let offset = 5;
         let bar_width = this.width;
-
+        let timeScale = this.getTimeScale()
+        let divisionNumber = Math.ceil(this.width / timeScale.deltaPixel) + 1;
         this.drawLine([0, bar_offset], [bar_width, bar_offset])
-        for(let i = 0; i <= this.divisionNumber; i++) {
-            let pos = this.getTimeScale().pixelOffset + i * this.getTimeScale().deltaPixel;
+        for(let i = -1; i <= divisionNumber; i++) {
+            let pos = timeScale.pixelOffset + i * timeScale.deltaPixel;
             this.drawLine([pos, bar_offset], [pos, bar_offset + offset])
-            let date = new Date(this.getTimeScale().startDate.getTime() + 1000 * i * this.getTimeScale().deltaSecond);
+            let date = new Date(timeScale.startDate.getTime() + 1000 * i * timeScale.deltaSecond);
             if(show=="hours")
-                this.drawText(this._dateToHours(date), [pos, 3 * offset])
+                this.drawText(this._dateToHours(date), {x:pos, y:3 * offset})
             if(show=="day")
-                this.drawText(this._dateToDate(date), [pos, 3 * offset])
+                this.drawText(this._dateToDate(date), {x:pos, y:3 * offset})
         }
     }
 
@@ -50,5 +51,14 @@ export class XAxisCanvas extends Canvas {
         }
         return addZero(date.getDate()) + "/" + addZero(date.getMonth()+1) + "/" + addZero(date.getFullYear());
     }
-    
+    onDrag(previousPos: Position, currentPos: Position) : any {
+        let zoomRatio = 0.1
+        let deltaX = currentPos.x-previousPos.x;
+        let scale = this.chartContainer.getTimeScale();
+        let midWidth = this.width / 2;
+        let newDeltaPixel = scale.deltaPixel * (1 + deltaX * zoomRatio);
+        scale.pixelOffset = midWidth - (midWidth - scale.pixelOffset) / scale.deltaPixel * newDeltaPixel;
+        scale.deltaPixel = newDeltaPixel;
+        this.chartContainer.setTimeScale(scale);
+    }
 }

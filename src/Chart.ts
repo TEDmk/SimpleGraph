@@ -2,7 +2,7 @@ import { ChartCanvas } from "./canvas/ChartCanvas";
 import { YAxisCanvas } from "./canvas/YAxisCanvas";
 import { XAxisCanvas } from "./canvas/xAxisCanvas";
 import { ChartContainer } from "./ChartContainer";
-import { DataScale, TimeScale } from "./Scale";
+import { DataScale, TimeScale, normalizeDataScale } from "./Scale";
 
 export class Chart {
     
@@ -11,12 +11,13 @@ export class Chart {
     private dataScale: DataScale;
 
     constructor(private chartContainer: ChartContainer, private xAxisCanvas: XAxisCanvas, private width: number, private height: number, private axisThickness: number) {
-        this.setDataScale({
+        this.dataScale = {
             startValue: 0,
             pixelOffset: 0,
-            deltaPixel: 20,
+            deltaPixel: 100,
             deltaValue: 100,
-        })
+            baseDeltaPixel: 100,
+        }
         this.chartCanvas = new ChartCanvas(this, width, height);
         this.yAxisCanvas = new YAxisCanvas(this, axisThickness, height);
         this.draw();
@@ -35,7 +36,8 @@ export class Chart {
     }
 
     setDataScale(dataScale: DataScale){
-        this.dataScale = dataScale;
+        this.dataScale = normalizeDataScale(dataScale);
+        this.draw();
     }
 
     getTimeScale(){
@@ -44,7 +46,6 @@ export class Chart {
 
     setTimeScale(timeScale: TimeScale){
         this.chartContainer.setTimeScale(timeScale);
-        this.chartContainer.draw();
     }
 
     draw() {

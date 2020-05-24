@@ -1,3 +1,5 @@
+import { defaultCanvasStyle, CanvasStyle } from "./Style"
+
 enum MouseState {
     Drag = 2,
     Up = 1,
@@ -20,7 +22,7 @@ export abstract class Canvas {
 
     protected screenPosition: Position;
 
-    constructor(width: number, height: number) {
+    constructor(width: number, height: number, private style: CanvasStyle = defaultCanvasStyle) {
         let ratio = 2;
 
         this.canvas = <HTMLCanvasElement>document.createElement("canvas");
@@ -51,6 +53,7 @@ export abstract class Canvas {
     }
 
     protected drawLine(start: [number, number], end: [number, number]) {
+        this.context.strokeStyle = this.style.color
         this.context.beginPath();
         this.context.translate(0.5, 0.5);
         this.context.moveTo(start[0], start[1]);
@@ -59,9 +62,10 @@ export abstract class Canvas {
         this.context.translate(-0.5, -0.5);
     }
 
-    protected drawText(text: string, pos: [number, number], font: string = "10px Arial"){
+    protected drawText(text: string, pos: Position, font: string = "10px Arial"){
+        this.context.fillStyle = this.style.color
         this.context.font = font;
-        this.context.fillText(text, pos[0], pos[1]);
+        this.context.fillText(text, pos.x, pos.y);
     }
 
     private onMouseChangeState(state: MouseState, e: MouseEvent) {
@@ -90,18 +94,25 @@ export abstract class Canvas {
         let y = e.clientY - this.boundingRect.top;
         if(this.mouseState == MouseState.Down || this.mouseState == MouseState.Drag){
             this.mouseState = MouseState.Drag;
+
             this.onDrag(this.mouseDownPos, {x:x, y:y})
+            this.mouseDownPos = {x:x, y:y};
         }
 
     }
 
     onDrag(previousPos: Position, currentPos: Position) : any {
         this.screenPosition = {x:this.screenPosition.x+currentPos.x-previousPos.x, y:this.screenPosition.y+currentPos.y-previousPos.y};
-        console.log(this.screenPosition)
         this.mouseDownPos = currentPos;
     }
 
     onClick(pos: Position) : any {
         console.log("CLICK")
     }
+
+    getStyle(){
+        return this.style;
+    }
+
+
 }

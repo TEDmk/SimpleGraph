@@ -10,21 +10,26 @@ export class ChartCanvas extends Canvas {
 
     draw() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.context.translate(this.screenPosition.x, this.screenPosition.y);
-        this.drawText("CELIA", [100, 100])
-        this.context.translate(-this.screenPosition.x, -this.screenPosition.y);
+        this.drawText(
+            "HELLO", 
+            this.realToScreenPos({
+                x: 1589923542000, 
+                y: 100,
+            })
+        );
     }
 
     onDrag(previousPos: Position, currentPos: Position) : any {
-        let x = this.screenPosition.x+currentPos.x-previousPos.x;
-        let y = this.screenPosition.y+currentPos.y-previousPos.y;
+        let deltaX = currentPos.x-previousPos.x;
+        let x = this.screenPosition.x+deltaX;
+        let deltaY = currentPos.y-previousPos.y;
+        let y = this.screenPosition.y+deltaY;
         this.screenPosition = {x: x, y: y};
-        this.mouseDownPos = currentPos;
         let currentDataScale = this.getDataScale();
-        currentDataScale.pixelOffset = y;
+        currentDataScale.pixelOffset = currentDataScale.pixelOffset + deltaY;
         this.setDataScale(currentDataScale);
         let currenTimeScale = this.getTimeScale();
-        currenTimeScale.pixelOffset = x;
+        currenTimeScale.pixelOffset = currenTimeScale.pixelOffset + deltaX;
         this.setTimeScale(currenTimeScale);
         this.chart.draw();
     }
@@ -43,5 +48,15 @@ export class ChartCanvas extends Canvas {
     
     setTimeScale(timeScale: TimeScale){
         this.chart.setTimeScale(timeScale);
+    }
+
+    realToScreenPos(realPosition: Position){
+        let timeScale = this.getTimeScale();
+        let dataScale = this.getDataScale();
+        let screenPosition = {
+            x: (realPosition.x - timeScale.startDate.getTime()) * timeScale.deltaPixel / (timeScale.deltaSecond * 1000) + timeScale.pixelOffset,
+            y: (realPosition.y - dataScale.startValue) * dataScale.deltaPixel / dataScale.deltaValue + dataScale.pixelOffset,
+        }
+        return screenPosition;
     }
 }
