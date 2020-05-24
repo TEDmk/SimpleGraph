@@ -52,17 +52,31 @@ export abstract class Canvas {
         return this.canvas
     }
 
-    protected drawLine(start: [number, number], end: [number, number]) {
-        this.context.strokeStyle = this.style.color
+    protected drawLine(start: Position, end: Position, color: string = this.getStyle().color) {
+        this.context.strokeStyle = color
         this.context.beginPath();
         this.context.translate(0.5, 0.5);
-        this.context.moveTo(start[0], start[1]);
-        this.context.lineTo(end[0], end[1]);
+        this.context.moveTo(start.x, start.y);
+        this.context.lineTo(end.x, end.y);
         this.context.stroke();
         this.context.translate(-0.5, -0.5);
     }
 
-    protected drawText(text: string, pos: Position, font: string = "10px Arial"){
+    protected drawBox(topLeft: Position, bottomRight: Position, strokeColor: string = null, backgroundColor: string = null) {
+        this.context.beginPath();
+        this.context.translate(0.5, 0.5);
+        if(backgroundColor)
+            this.context.fillStyle = backgroundColor;
+            this.context.fillRect(topLeft.x, topLeft.y, bottomRight.x-topLeft.x, bottomRight.y-topLeft.y);
+        if(strokeColor)
+            this.context.beginPath();
+            this.context.strokeStyle = strokeColor;
+            this.context.rect(topLeft.x, topLeft.y, bottomRight.x-topLeft.x, bottomRight.y-topLeft.y);
+            this.context.stroke();
+        this.context.translate(-0.5, -0.5);
+    }
+
+    protected drawText(text: string, pos: Position, font: string = "10px Arial") {
         this.context.fillStyle = this.style.color
         this.context.font = font;
         this.context.fillText(text, pos.x, pos.y);
@@ -77,10 +91,10 @@ export abstract class Canvas {
             this.onClick({x: x, y: y});
         
         // Record position of Mouse Down in case of drag
-        if (state == MouseState.Up){
+        if (state == MouseState.Up) {
             this.mouseDownPos = null;
         }
-        if (state == MouseState.Down){
+        if (state == MouseState.Down) {
             this.mouseDownPos = {x: x, y: y};
         }
 
@@ -92,7 +106,7 @@ export abstract class Canvas {
     private onMouseMove(e: MouseEvent) {
         let x = e.clientX - this.boundingRect.left;
         let y = e.clientY - this.boundingRect.top;
-        if(this.mouseState == MouseState.Down || this.mouseState == MouseState.Drag){
+        if(this.mouseState == MouseState.Down || this.mouseState == MouseState.Drag) {
             this.mouseState = MouseState.Drag;
 
             this.onDrag(this.mouseDownPos, {x:x, y:y})
@@ -110,7 +124,7 @@ export abstract class Canvas {
         console.log("CLICK")
     }
 
-    getStyle(){
+    getStyle() {
         return this.style;
     }
 

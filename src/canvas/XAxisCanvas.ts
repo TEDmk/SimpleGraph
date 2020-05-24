@@ -10,7 +10,7 @@ export class XAxisCanvas extends Canvas {
         super(width, height);
     }
 
-    setScale(scale: TimeScale){
+    setScale(scale: TimeScale) {
         this.timeScale = scale;
     }
 
@@ -22,10 +22,10 @@ export class XAxisCanvas extends Canvas {
         let bar_width = this.width;
         let timeScale = this.getTimeScale()
         let divisionNumber = Math.ceil(this.width / timeScale.deltaPixel) + 1;
-        this.drawLine([0, bar_offset], [bar_width, bar_offset])
+        this.drawLine({x:0, y:bar_offset}, {x:bar_width, y:bar_offset})
         for(let i = -1; i <= divisionNumber; i++) {
             let pos = timeScale.pixelOffset + i * timeScale.deltaPixel;
-            this.drawLine([pos, bar_offset], [pos, bar_offset + offset])
+            this.drawLine({x:pos, y:bar_offset}, {x:pos, y:bar_offset + offset})
             let date = new Date(timeScale.startDate.getTime() + 1000 * i * timeScale.deltaSecond);
             if(show=="hours")
                 this.drawText(this._dateToHours(date), {x:pos, y:3 * offset})

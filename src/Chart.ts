@@ -31,20 +31,20 @@ export class Chart {
         return this.chartCanvas;
     }
 
-    getDataScale(){
+    getDataScale() {
         return this.dataScale;
     }
 
-    setDataScale(dataScale: DataScale){
+    setDataScale(dataScale: DataScale) {
         this.dataScale = normalizeDataScale(dataScale);
         this.draw();
     }
 
-    getTimeScale(){
+    getTimeScale() {
         return this.chartContainer.getTimeScale();
     }
 
-    setTimeScale(timeScale: TimeScale){
+    setTimeScale(timeScale: TimeScale) {
         this.chartContainer.setTimeScale(timeScale);
     }
 

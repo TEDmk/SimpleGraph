@@ -16,16 +16,16 @@ export class YAxisCanvas extends Canvas {
         let bar_height = this.height;
         let dataScale = this.getDataScale();
         let divisionNumber = Math.ceil(this.height / dataScale.deltaPixel) + 1;
-        this.drawLine([bar_offset, 0], [bar_offset, bar_height])
+        this.drawLine({x:bar_offset, y:0}, {x:bar_offset, y:bar_height})
         for(let i = -1; i <= divisionNumber; i++) {
             let pos = dataScale.pixelOffset + i * dataScale.deltaPixel;
-            this.drawLine([bar_offset, pos], [bar_offset + offset, pos])
+            this.drawLine({x:bar_offset, y:pos}, {x:bar_offset + offset, y:pos})
             let value = dataScale.startValue + i * dataScale.deltaValue;
             this.drawText(value.toString(), {x:bar_offset + 2 * offset, y:pos})
         }
     }
 
-    getDataScale(){
+    getDataScale() {
         return this.chart.getDataScale();
     }
 

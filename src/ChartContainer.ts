@@ -1,5 +1,5 @@
 import { Chart } from "./Chart";
-import { XAxisCanvas } from "./canvas/xAxisCanvas";
+import { XAxisCanvas } from "./canvas/XAxisCanvas";
 import { Canvas } from "./canvas/Canvas";
 import { TimeScale, normalizeTimeScale } from "./Scale";
 
@@ -13,7 +13,7 @@ export class ChartContainer {
     private xAxisRow: HTMLElement;
     private timeScale: TimeScale;
 
-    constructor(public divID: string, private width: number, private axisThickness: number){
+    constructor(public divID: string, private width: number, private axisThickness: number) {
         this.timeScale = {
             startDate: new Date(1589923542000), 
             pixelOffset: 20, 
@@ -50,7 +50,7 @@ export class ChartContainer {
         this.addXAxis()
     }
 
-    draw(){
+    draw() {
         for (let chart of this.charts) 
             chart.draw();
         this.xAxisCanvas.draw();
@@ -68,12 +68,12 @@ export class ChartContainer {
         this.xAxisCanvas.draw();
     }
 
-    setTimeScale(timeScale: TimeScale){
+    setTimeScale(timeScale: TimeScale) {
         this.timeScale = normalizeTimeScale(timeScale);
         this.draw();
     }
 
-    getTimeScale(){
+    getTimeScale() {
         return this.timeScale;
     }
 

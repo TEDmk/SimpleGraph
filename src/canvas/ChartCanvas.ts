@@ -10,13 +10,36 @@ export class ChartCanvas extends Canvas {
 
     draw() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.drawText(
+        this.realDrawText(
             "HELLO", 
-            this.realToScreenPos({
+            {
+                x: 1589923542000, 
+                y: 200,
+            }
+        );
+        this.realDrawLine(
+            {
+                x: 1589923542000, 
+                y: 200,
+            },
+            {
+                x: 1589923542000, 
+                y: 300,
+            },
+            this.getStyle().redColor
+        )
+        this.realDrawBox(
+            {
                 x: 1589923542000, 
                 y: 100,
-            })
-        );
+            },
+            {
+                x: 1589923892000, 
+                y: 300,
+            },
+            null,
+            this.getStyle().redColor
+        )
     }
 
     onDrag(previousPos: Position, currentPos: Position) : any {
@@ -34,23 +57,23 @@ export class ChartCanvas extends Canvas {
         this.chart.draw();
     }
 
-    getDataScale(){
+    getDataScale() {
         return this.chart.getDataScale();
     }
 
-    setDataScale(dataScale: DataScale){
+    setDataScale(dataScale: DataScale) {
         return this.chart.setDataScale(dataScale);
     }
 
-    getTimeScale(){
+    getTimeScale() {
         return this.chart.getTimeScale();
     }
     
-    setTimeScale(timeScale: TimeScale){
+    setTimeScale(timeScale: TimeScale) {
         this.chart.setTimeScale(timeScale);
     }
 
-    realToScreenPos(realPosition: Position){
+    realToScreenPos(realPosition: Position) {
         let timeScale = this.getTimeScale();
         let dataScale = this.getDataScale();
         let screenPosition = {
@@ -58,5 +81,30 @@ export class ChartCanvas extends Canvas {
             y: (realPosition.y - dataScale.startValue) * dataScale.deltaPixel / dataScale.deltaValue + dataScale.pixelOffset,
         }
         return screenPosition;
+    }
+
+    realDrawLine(start: Position, end: Position, color: string = this.getStyle().color) {
+        let screenStart = this.realToScreenPos(start);
+        let screenEnd = this.realToScreenPos(end);
+        return super.drawLine(
+            screenStart,
+            screenEnd,
+            color,
+        )
+    }
+
+    realDrawText(text: string, pos: Position, font: string = "10px Arial") {
+        let screenPos = this.realToScreenPos(pos);
+        return super.drawText(
+            text,
+            screenPos,
+            font,
+        )
+    }
+
+    realDrawBox(topLeft: Position, bottomRight: Position, strokeColor: string = null, backgroundColor: string = null) {
+        let screenTopLeft = this.realToScreenPos(topLeft);
+        let screenBottomRight = this.realToScreenPos(bottomRight);
+        return this.drawBox(screenTopLeft, screenBottomRight, strokeColor, backgroundColor)
     }
 }
