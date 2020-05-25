@@ -61,4 +61,18 @@ export class Chart {
             layer.draw();
         }
     }
+
+    scaleData(ratio: number) {
+        let zoomRatio = 0.1
+        let scale = this.getDataScale();
+        let midHeight = this.height / 2;
+        let newDeltaPixel = scale.deltaPixel * (1 + zoomRatio * ratio);
+        scale.pixelOffset = midHeight - (midHeight - scale.pixelOffset) / scale.deltaPixel * newDeltaPixel;
+        scale.deltaPixel = newDeltaPixel;
+        this.setDataScale(scale);
+    }
+
+    scaleTime(ratio: number) {
+        this.chartContainer.scaleTime(ratio);
+    }
 }

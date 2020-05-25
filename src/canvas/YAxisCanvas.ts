@@ -30,13 +30,7 @@ export class YAxisCanvas extends Canvas {
     }
 
     onDrag(previousPos: Position, currentPos: Position) : any {
-        let zoomRatio = 0.1
         let deltaY = currentPos.y-previousPos.y;
-        let scale = this.chart.getDataScale();
-        let midHeight = this.height / 2;
-        let newDeltaPixel = scale.deltaPixel * (1 + deltaY * zoomRatio);
-        scale.pixelOffset = midHeight - (midHeight - scale.pixelOffset) / scale.deltaPixel * newDeltaPixel;
-        scale.deltaPixel = newDeltaPixel;
-        this.chart.setDataScale(scale);
+        this.chart.scaleData(deltaY);
     }
 }

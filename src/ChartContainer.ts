@@ -76,4 +76,14 @@ export class ChartContainer {
         cell.appendChild(canvas.getCanvas());
         return cell;
     }
+
+    scaleTime(ratio: number) {
+        let zoomRatio = 0.1
+        let scale = this.getTimeScale();
+        let midWidth = this.width / 2;
+        let newDeltaPixel = scale.deltaPixel * (1 + ratio * zoomRatio);
+        scale.pixelOffset = midWidth - (midWidth - scale.pixelOffset) / scale.deltaPixel * newDeltaPixel;
+        scale.deltaPixel = newDeltaPixel;
+        this.setTimeScale(scale);
+    }
 }

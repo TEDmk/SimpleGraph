@@ -52,13 +52,8 @@ export class XAxisCanvas extends Canvas {
         return addZero(date.getDate()) + "/" + addZero(date.getMonth()+1) + "/" + addZero(date.getFullYear());
     }
     onDrag(previousPos: Position, currentPos: Position) : any {
-        let zoomRatio = 0.1
         let deltaX = currentPos.x-previousPos.x;
-        let scale = this.chartContainer.getTimeScale();
-        let midWidth = this.width / 2;
-        let newDeltaPixel = scale.deltaPixel * (1 + deltaX * zoomRatio);
-        scale.pixelOffset = midWidth - (midWidth - scale.pixelOffset) / scale.deltaPixel * newDeltaPixel;
-        scale.deltaPixel = newDeltaPixel;
-        this.chartContainer.setTimeScale(scale);
+        this.chartContainer.scaleTime(deltaX);
+        
     }
 }

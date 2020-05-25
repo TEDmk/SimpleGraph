@@ -6,6 +6,11 @@ enum MouseState {
     Down = 0,
 }
 
+export enum Direction {
+    UP = 1,
+    DOWN = 2,
+}
+
 export class Position {
     x: number;
     y: number;
@@ -44,6 +49,13 @@ export abstract class Canvas {
         this.canvas.addEventListener("mousedown", e => {this.onMouseChangeState(MouseState.Down, e);});
         this.canvas.addEventListener("mouseup", e => {this.onMouseChangeState(MouseState.Up, e);});
         this.canvas.addEventListener("mousemove", e => {this.onMouseMove(e);});
+        this.canvas.addEventListener('wheel',e => {
+            if(e.deltaY < 0)
+                this.onScroll(Direction.UP)
+            if(e.deltaY > 0)
+                this.onScroll(Direction.DOWN)
+            event.preventDefault();
+        });
     }
     
     abstract draw(): any;
@@ -124,6 +136,10 @@ export abstract class Canvas {
     onDrag(previousPos: Position, currentPos: Position) : any {
         this.screenPosition = {x:this.screenPosition.x+currentPos.x-previousPos.x, y:this.screenPosition.y+currentPos.y-previousPos.y};
         this.mouseDownPos = currentPos;
+    }
+
+    onScroll(direction: Direction) {
+        
     }
 
     onClick(pos: Position) : any {

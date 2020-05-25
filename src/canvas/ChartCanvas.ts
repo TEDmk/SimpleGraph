@@ -1,4 +1,4 @@
-import { Canvas, Position } from "./Canvas";
+import { Canvas, Position, Direction } from "./Canvas";
 import { Chart } from "../Chart"
 import { DataScale, TimeScale } from "../Scale";
 
@@ -43,6 +43,17 @@ export class ChartCanvas extends Canvas {
         currenTimeScale.pixelOffset = currenTimeScale.pixelOffset + deltaX;
         this.setTimeScale(currenTimeScale);
         this.chart.draw();
+    }
+
+    onScroll(direction) {
+        if(direction == Direction.UP) {
+            this.chart.scaleData(0.4);
+            this.chart.scaleTime(0.4);
+        }
+        if(direction == Direction.DOWN) {
+            this.chart.scaleData(-0.4);
+            this.chart.scaleTime(-0.4);
+        }
     }
 
     getDataScale() {
