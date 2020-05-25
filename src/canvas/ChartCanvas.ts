@@ -20,7 +20,14 @@ export class ChartCanvas extends Canvas {
     }
 
     draw() {
-
+        let timeScale = this.getTimeScale();
+        let dataScale = this.getDataScale();
+        for(let i=0; i < Math.ceil(this.height/dataScale.deltaPixel)+1; i++) {
+            this.drawLine({x:0, y: dataScale.pixelOffset + i * dataScale.deltaPixel}, {x: this.width, y: dataScale.pixelOffset + i * dataScale.deltaPixel}, this.getStyle().color, 0.2)
+        }
+        for(let i=0; i < Math.ceil(this.width/timeScale.deltaPixel)+1; i++) {
+            this.drawLine({x:timeScale.pixelOffset + i * timeScale.deltaPixel, y: 0}, {x: timeScale.pixelOffset + i * timeScale.deltaPixel, y: this.height}, this.getStyle().color, 0.2)
+        }
     }
 
     onDrag(previousPos: Position, currentPos: Position) : any {

@@ -52,7 +52,9 @@ export abstract class Canvas {
         return this.canvas
     }
 
-    protected drawLine(start: Position, end: Position, color: string = this.getStyle().color) {
+    protected drawLine(start: Position, end: Position, color: string = this.getStyle().color, opacity: number = 1) {
+        this.context.save();
+        this.context.globalAlpha = opacity;
         this.context.strokeStyle = color
         this.context.beginPath();
         this.context.translate(0.5, 0.5);
@@ -60,20 +62,24 @@ export abstract class Canvas {
         this.context.lineTo(end.x, end.y);
         this.context.stroke();
         this.context.translate(-0.5, -0.5);
+        this.context.restore();
     }
 
     protected drawBox(topLeft: Position, bottomRight: Position, strokeColor: string = null, backgroundColor: string = null) {
+        this.context.save();
         this.context.beginPath();
         this.context.translate(0.5, 0.5);
         if(backgroundColor)
             this.context.fillStyle = backgroundColor;
             this.context.fillRect(topLeft.x, topLeft.y, bottomRight.x-topLeft.x, bottomRight.y-topLeft.y);
-        if(strokeColor)
+        if(strokeColor){
             this.context.beginPath();
             this.context.strokeStyle = strokeColor;
             this.context.rect(topLeft.x, topLeft.y, bottomRight.x-topLeft.x, bottomRight.y-topLeft.y);
             this.context.stroke();
+        }
         this.context.translate(-0.5, -0.5);
+        this.context.restore();
     }
 
     protected drawText(text: string, pos: Position, font: string = "10px Arial") {
