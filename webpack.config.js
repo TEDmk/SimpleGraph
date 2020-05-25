@@ -10,7 +10,7 @@ module.exports = {
                 test: /\.ts$/,
                 use: [{
                     loader: 'expose-loader',
-                    options: 'SimpleGraph'
+                    options: 'SimpleTimeChart'
                 }, {
                     loader: 'ts-loader'
                 }],
@@ -23,7 +23,7 @@ module.exports = {
         ],
     },
     output: {
-        filename: 'bundle.js',
+        filename: 'simple-time-chart.js',
         path: path.resolve(__dirname, './www'),
     },
 };

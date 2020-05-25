@@ -1,4 +1,4 @@
-# SimpleGraph
+# SimpleTimeChart
 
 ## run
 
