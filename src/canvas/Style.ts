@@ -6,8 +6,8 @@ export class CanvasStyle {
 }
 
 export let defaultCanvasStyle: CanvasStyle = {
-    color: "#594940",
-    backgroundColor: "#F2E1D8",
-    greenColor: "#8C6E5D",
+    color: "#D0D0D0",
+    backgroundColor: "#292F33",
+    greenColor: "#038C3E",
     redColor: "#BF452A"
 }
