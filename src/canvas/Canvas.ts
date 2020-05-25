@@ -45,6 +45,7 @@ export abstract class Canvas {
         this.mouseState = MouseState.Up;
  
         this.boundingRect = this.canvas.getBoundingClientRect();
+        this.canvas.style.cursor = "pointer";
         this.screenPosition = {x: 0, y: 0};
         this.canvas.addEventListener("mousedown", e => {this.onMouseChangeState(MouseState.Down, e);});
         this.canvas.addEventListener("mouseup", e => {this.onMouseChangeState(MouseState.Up, e);});
@@ -105,12 +106,14 @@ export abstract class Canvas {
         let y = e.clientY - this.boundingRect.top;
 
         // Getting a Click = UP -> DOWN -> UP
-        if (state == MouseState.Up && this.mouseState == MouseState.Down)
-            this.onClick({x: x, y: y});
+        if (state == MouseState.Up && this.mouseState == MouseState.Down){
+                this.onClick({x: x, y: y});
+        }
         
         // Record position of Mouse Down in case of drag
         if (state == MouseState.Up) {
             this.mouseDownPos = null;
+            this.canvas.style.cursor = "pointer";
         }
         if (state == MouseState.Down) {
             this.mouseDownPos = {x: x, y: y};
@@ -118,7 +121,7 @@ export abstract class Canvas {
 
         if (!(this.mouseState == MouseState.Drag && state == MouseState.Down)) {
             this.mouseState = state;
-        }
+        }        
     }
 
     private onMouseMove(e: MouseEvent) {
@@ -126,7 +129,7 @@ export abstract class Canvas {
         let y = e.clientY - this.boundingRect.top;
         if(this.mouseState == MouseState.Down || this.mouseState == MouseState.Drag) {
             this.mouseState = MouseState.Drag;
-
+            this.canvas.style.cursor = "grab";
             this.onDrag(this.mouseDownPos, {x:x, y:y})
             this.mouseDownPos = {x:x, y:y};
         }
