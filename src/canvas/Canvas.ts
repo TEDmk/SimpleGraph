@@ -65,8 +65,9 @@ export abstract class Canvas {
         return this.canvas
     }
 
-    protected drawLine(start: Position, end: Position, color: string = this.getStyle().color, opacity: number = 1) {
+    protected drawLine(start: Position, end: Position, color: string = this.getStyle().color, opacity: number = 1, thickness: number = 1) {
         this.context.save();
+        this.context.lineWidth = thickness;
         this.context.globalAlpha = opacity;
         this.context.strokeStyle = color
         this.context.beginPath();

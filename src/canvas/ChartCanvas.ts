@@ -82,13 +82,15 @@ export class ChartCanvas extends Canvas {
         return screenPosition;
     }
 
-    realDrawLine(start: Position, end: Position, color: string = this.getStyle().color) {
+    realDrawLine(start: Position, end: Position, color: string = this.getStyle().color, thickness: number = 1) {
         let screenStart = this.realToScreenPos(start);
         let screenEnd = this.realToScreenPos(end);
         return super.drawLine(
             screenStart,
             screenEnd,
             color,
+            1,
+            thickness,
         )
     }
 
