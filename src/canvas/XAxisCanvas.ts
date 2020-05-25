@@ -27,10 +27,8 @@ export class XAxisCanvas extends Canvas {
             let pos = timeScale.pixelOffset + i * timeScale.deltaPixel;
             this.drawLine({x:pos, y:bar_offset}, {x:pos, y:bar_offset + offset})
             let date = new Date(timeScale.startDate.getTime() + 1000 * i * timeScale.deltaSecond);
-            if(show=="hours")
-                this.drawText(this._dateToHours(date), {x:pos, y:3 * offset})
-            if(show=="day")
-                this.drawText(this._dateToDate(date), {x:pos, y:3 * offset})
+            this.drawText(this._dateToHours(date), {x:pos, y:3 * offset + 10}, "10px Arial" ,"center")
+            this.drawText(this._dateToDate(date), {x:pos, y:3 * offset}, "10px Arial" ,"center")
         }
     }
 

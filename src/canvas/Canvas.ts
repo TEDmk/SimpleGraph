@@ -95,7 +95,8 @@ export abstract class Canvas {
         this.context.restore();
     }
 
-    protected drawText(text: string, pos: Position, font: string = "10px Arial") {
+    protected drawText(text: string, pos: Position, font: string = "10px Arial", align: string = "left") {
+        this.context.textAlign = <CanvasTextAlign>align;
         this.context.fillStyle = this.style.color
         this.context.font = font;
         this.context.fillText(text, pos.x, pos.y);
