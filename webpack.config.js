@@ -5,9 +5,15 @@ module.exports = {
     mode: 'development',
     module: {
         rules: [
+            
             {
                 test: /\.ts$/,
-                use: 'ts-loader',
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'SimpleGraph'
+                }, {
+                    loader: 'ts-loader'
+                }],
             },
         ],
     },

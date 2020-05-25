@@ -3,24 +3,21 @@ import { YAxisCanvas } from "./canvas/YAxisCanvas";
 import { XAxisCanvas } from "./canvas/xAxisCanvas";
 import { ChartContainer } from "./ChartContainer";
 import { DataScale, TimeScale, normalizeDataScale } from "./Scale";
+import { Layer } from "./layers/layer"
+
 
 export class Chart {
     
     private chartCanvas: ChartCanvas;
     private yAxisCanvas: YAxisCanvas;
     private dataScale: DataScale;
+    private layerList: Array<Layer>;
+
 
     constructor(private chartContainer: ChartContainer, private xAxisCanvas: XAxisCanvas, private width: number, private height: number, private axisThickness: number) {
-        this.dataScale = {
-            startValue: 0,
-            pixelOffset: 0,
-            deltaPixel: 100,
-            deltaValue: 100,
-            baseDeltaPixel: 100,
-        }
         this.chartCanvas = new ChartCanvas(this, width, height);
         this.yAxisCanvas = new YAxisCanvas(this, axisThickness, height);
-        this.draw();
+        this.layerList = new Array<Layer>();
     }
 
     getYAxisCanvas() {
@@ -44,12 +41,24 @@ export class Chart {
         return this.chartContainer.getTimeScale();
     }
 
-    setTimeScale(timeScale: TimeScale) {
+    setTimeScale(timeScale: TimeScale, draw: boolean = true) {
         this.chartContainer.setTimeScale(timeScale);
+        if(draw)
+            this.draw();
+    }
+
+    addLayer(layer: Layer) {
+        layer.setChartCanvas(this.chartCanvas);
+        this.layerList.push(layer);
+        this.draw()
     }
 
     draw() {
+        this.chartCanvas.clear();
         this.chartCanvas.draw();
         this.yAxisCanvas.draw();
+        for(let layer of this.layerList) {
+            layer.draw();
+        }
     }
 }

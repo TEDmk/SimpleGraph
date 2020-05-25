@@ -2,44 +2,25 @@ import { Canvas, Position } from "./Canvas";
 import { Chart } from "../Chart"
 import { DataScale, TimeScale } from "../Scale";
 
+class Margin {
+    top: number = 0;
+    bottom: number = 0;
+    left: number = 0;
+    right: number = 0;
+}
+
 export class ChartCanvas extends Canvas {
     
     constructor(private chart: Chart, private width: number, private height: number) {
         super(width, height);
     }
 
-    draw() {
+    clear() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.realDrawText(
-            "HELLO", 
-            {
-                x: 1589923542000, 
-                y: 200,
-            }
-        );
-        this.realDrawLine(
-            {
-                x: 1589923542000, 
-                y: 200,
-            },
-            {
-                x: 1589923542000, 
-                y: 300,
-            },
-            this.getStyle().redColor
-        )
-        this.realDrawBox(
-            {
-                x: 1589923542000, 
-                y: 100,
-            },
-            {
-                x: 1589923892000, 
-                y: 300,
-            },
-            null,
-            this.getStyle().redColor
-        )
+    }
+
+    draw() {
+
     }
 
     onDrag(previousPos: Position, currentPos: Position) : any {
@@ -102,9 +83,13 @@ export class ChartCanvas extends Canvas {
         )
     }
 
-    realDrawBox(topLeft: Position, bottomRight: Position, strokeColor: string = null, backgroundColor: string = null) {
+    realDrawBox(topLeft: Position, bottomRight: Position, strokeColor: string = null, backgroundColor: string = null, margin: Margin = new Margin()) {
         let screenTopLeft = this.realToScreenPos(topLeft);
         let screenBottomRight = this.realToScreenPos(bottomRight);
+        screenTopLeft.x += margin.left;
+        screenTopLeft.y += margin.top;
+        screenBottomRight.x -= margin.right;
+        screenBottomRight.y -= margin.bottom;
         return this.drawBox(screenTopLeft, screenBottomRight, strokeColor, backgroundColor)
     }
 }

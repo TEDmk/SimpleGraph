@@ -14,13 +14,6 @@ export class ChartContainer {
     private timeScale: TimeScale;
 
     constructor(public divID: string, private width: number, private axisThickness: number) {
-        this.timeScale = {
-            startDate: new Date(1589923542000), 
-            pixelOffset: 20, 
-            deltaPixel: 100, 
-            deltaSecond: 60*30,
-            baseDeltaPixel: 100,
-        };
         this.charts = new Array<Chart>();
         this.containerElement = <HTMLElement>document.getElementById(divID);
         this.xAxisCanvas = new XAxisCanvas(this, width, axisThickness);
@@ -34,6 +27,7 @@ export class ChartContainer {
         let chart = new Chart(this, this.xAxisCanvas, this.width, height, this.axisThickness);
         this.charts.push(chart);
         this.update();
+        return chart
     }
 
     update() {
@@ -65,12 +59,12 @@ export class ChartContainer {
         xAxisRow.appendChild(
             this.getCanvasInCell(uselessCanvas)
         );
-        this.xAxisCanvas.draw();
     }
 
-    setTimeScale(timeScale: TimeScale) {
+    setTimeScale(timeScale: TimeScale, draw: boolean = true) {
         this.timeScale = normalizeTimeScale(timeScale);
-        this.draw();
+        if(draw)
+            this.draw();
     }
 
     getTimeScale() {

@@ -1,5 +1,3 @@
-import { ChartContainer } from "./ChartContainer";
-import { Chart } from "./Chart";
-
-let chartContainer = new ChartContainer("test", 800, 50);
-chartContainer.newChart(400);
+export { ChartContainer } from "./ChartContainer";
+export { Chart } from "./Chart";
+export { CandlestickLayer, Candlestick } from "./layers/candlestick"
