@@ -68,6 +68,11 @@
             let pointList = data.map(x => {return {x: x.date * 1000, y: x.close}});
             let lineLayer = new SimpleTimeChart.LineLayer(pointList)
             chart2.addLayer(lineLayer)
+
+            let bandStepList = data.map(x => {return {x: x.date * 1000, top: x.high, bottom:x.low}});
+            let bandLayer = new SimpleTimeChart.BandLayer(bandStepList);
+            chart.addLayer(bandLayer);
+
             chartContainer.draw();
         </script>
     </body>

@@ -40,7 +40,6 @@ export class LineLayer extends Layer {
             console.log("can't draw without ChartCanvas, please use setChartCanvas to set it.")
             return
         }
-        console.log(this.pointList)
         this.chartCanvas.realDrawLine(this.pointList, this.lineStyle.color, this.lineStyle.opacity, this.lineStyle.thickness)
     }
 }
