@@ -59,6 +59,8 @@ let secondChart = chartContainer.newChart(
 
 For now there are 3 types of layers: `CandleStickLayer`, `LineLayer`, `BandLayer`
 
+*NB: Style in layers is optional*
+
 ```javascript
 // Get data we will use for the demo
 let data = [{"date":1546300800,"high":0.01232199,"low":0.012105,"open":0.01227412,"close":0.01224702,"volume":11.47474031,"quoteVolume":938.52999477,"weightedAverage":0.01222629}, ...]
@@ -74,7 +76,13 @@ let pointList = candlesticks.map(x => {return {x: x.date.getTime(), y: x.weighte
 let bandStepList = candlesticks.map(x => {return {x: x.date.getTime(), top: x.high, bottom:x.low}});
 
 // Define all layers
-let candlestickLayer = new SimpleTimeChart.CandlestickLayer(candlesticks);
+let candlestickLayer = new SimpleTimeChart.CandlestickLayer(candlesticks, {
+    neutralColor: "#D0D0D0",
+    greenColor: "#038C3E",
+    redColor: "#BF452A",
+    opacity: 1,
+    shadowThickness: 1,
+});
 let lineLayer = new SimpleTimeChart.LineLayer(pointList, {
     color: "#ff0",
     thickness: 2,

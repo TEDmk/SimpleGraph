@@ -24,7 +24,13 @@ let pointList = candlesticks.map(x => {return {x: x.date.getTime(), y: x.weighte
 let bandStepList = candlesticks.map(x => {return {x: x.date.getTime(), top: x.high, bottom:x.low}});
 
 // Define all layers
-let candlestickLayer = new SimpleTimeChart.CandlestickLayer(candlesticks);
+let candlestickLayer = new SimpleTimeChart.CandlestickLayer(candlesticks, {
+    neutralColor: "#D0D0D0",
+    greenColor: "#038C3E",
+    redColor: "#BF452A",
+    opacity: 1,
+    shadowThickness: 1,
+});
 let lineLayer = new SimpleTimeChart.LineLayer(pointList, {
     color: "#ff0",
     thickness: 2,
