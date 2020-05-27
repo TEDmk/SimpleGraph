@@ -1,5 +1,5 @@
 let chartContainer = new SimpleTimeChart.ChartContainer(
-    "test", // Div ID of the containing the chart
+    "myChart", // Div ID of the containing the chart
     1300,  // Width of the chart
     70,  // Axis Tickness
     {

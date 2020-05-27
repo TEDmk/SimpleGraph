@@ -1,6 +1,27 @@
 # SimpleTimeChart
 
-## Documentation
+## Tutorial
+
+
+### Create the minimum HTML File
+
+First download the last SimpleTimeChart JS file, then create a blank `main.js`.
+
+Finally, Create a `index.html` file with the following content
+
+```HTML
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SimpleTimeChart</title>
+    </head>
+    <body>
+        <div id="myChart"></div>
+        <script src="simple-time-chart.js"></script>
+        <script src="main.js"></script>
+    </body>
+</html>
+```
 
 ### Create a ChartContainer
 
@@ -9,7 +30,7 @@ The ChartContainer will contain all your charts.
 
 ```javascript
 let chartContainer = new SimpleTimeChart.ChartContainer(
-    "test", // Div ID of the containing the chart
+    "myChart", // Div ID of the containing the chart
     1300,  // Width of the chart
     70,  // Axis Tickness
     {
@@ -95,6 +116,11 @@ secondChart.setDataScale(
 chartContainer.draw();
 ```
 
+
+### Go to the demo
+
+- You can see the full code from above [here](https://github.com/TEDmk/SimpleTimeChart/blob/master/www/main.js)
+- You can also see a live demo [here](https://tedmk.github.io/SimpleTimeChart/www/index.html)
 
 ## How to run the dev
 
