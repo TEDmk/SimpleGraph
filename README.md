@@ -1,4 +1,4 @@
-# SimpleTimeChart
+# :chart_with_upwards_trend: SimpleTimeChart
 
 ## Tutorial
 
