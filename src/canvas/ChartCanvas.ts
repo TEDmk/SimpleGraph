@@ -82,13 +82,22 @@ export class ChartCanvas extends Canvas {
         return screenPosition;
     }
 
-    realDrawLine(points: Array<Position>,  color: string = this.getStyle().color, thickness: number = 1) {
+    realDrawLine(points: Array<Position>,  color: string = this.getStyle().color, opacity: number = 1, thickness: number = 1) {
         let screenPoints = points.map(point => {return this.realToScreenPos(point)})
         return super.drawLine(
             screenPoints,
             color,
-            1,
+            opacity,
             thickness,
+        )
+    }
+
+    realDrawPolygon(points: Array<Position>,  color: string = this.getStyle().color, opacity: number = 1) {
+        let screenPoints = points.map(point => {return this.realToScreenPos(point)})
+        return super.drawPolygon(
+            screenPoints,
+            color,
+            opacity,
         )
     }
 

@@ -80,6 +80,20 @@ export abstract class Canvas {
         this.context.restore();
     }
 
+    protected drawPolygon(points: Array<Position>, color: string = this.getStyle().color, opacity: number = 1) {
+        this.context.save();
+        this.context.globalAlpha = opacity;
+        this.context.fillStyle = color
+        this.context.beginPath();
+        this.context.translate(0.5, 0.5);
+        this.context.moveTo(points[0].x, points[0].y);
+        for(let point of points.slice(1, points.length))
+            this.context.lineTo(point.x, point.y);
+        this.context.fill();
+        this.context.translate(-0.5, -0.5);
+        this.context.restore();
+    }
+
     protected drawBox(topLeft: Position, bottomRight: Position, strokeColor: string = null, backgroundColor: string = null) {
         this.context.save();
         this.context.beginPath();
