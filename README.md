@@ -1,13 +1,15 @@
 # :chart_with_upwards_trend: SimpleTimeChart
 
+## Download and Demo
+
+- You can download the last version:
+    - [v0.1.0 (Standard Version)](https://github.com/TEDmk/SimpleTimeChart/releases/download/v0.1.0/simple-time-chart.js)
+    - [v0.1.0 (Minified Version)](https://github.com/TEDmk/SimpleTimeChart/releases/download/v0.1.0/simple-time-chart.min.js)
+- You can also see a live demo [here](https://tedmk.github.io/SimpleTimeChart/www/index.html)
+
 ## Tutorial
 
-
 ### Create the minimum HTML File
-
-First download the last SimpleTimeChart JS file:
-- [v0.1.0 (Standard Version)](https://github.com/TEDmk/SimpleTimeChart/releases/download/v0.1.0/simple-time-chart.js)
-- [v0.1.0 (Minified Version)](https://github.com/TEDmk/SimpleTimeChart/releases/download/v0.1.0/simple-time-chart.min.js)
 
 Create a blank `main.js`.
 
@@ -138,10 +140,9 @@ chartContainer.draw();
 ```
 
 
-### Go to the demo
+### Full code
 
 - You can see the full code from above [here](https://github.com/TEDmk/SimpleTimeChart/blob/master/www/main.js)
-- You can also see a live demo [here](https://tedmk.github.io/SimpleTimeChart/www/index.html)
 
 ## How to run the dev
 
