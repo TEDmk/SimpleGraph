@@ -31,7 +31,7 @@ The ChartContainer will contain all your charts.
 ```javascript
 let chartContainer = new SimpleTimeChart.ChartContainer(
     "myChart", // Div ID of the containing the chart
-    1300,  // Width of the chart
+    800,  // Width of the chart
     70,  // Axis Tickness
     {
         color: "#D0D0D0", // Color of axis text
@@ -50,9 +50,9 @@ let chart = chartContainer.newChart(
     500 // height of the Chart
 );
 
-let secondChart = chartContainer.newChart(
-    300 // height of the Chart
-);
+let secondChart = chartContainer.newChart(300);
+
+let volumeChart = chartContainer.newChart(100);
 ```
 
 ### Add Layers to Charts
@@ -74,6 +74,7 @@ let candlesticks = data.map(x => {
 })
 let pointList = candlesticks.map(x => {return {x: x.date.getTime(), y: x.weightedAverage}});
 let bandStepList = candlesticks.map(x => {return {x: x.date.getTime(), top: x.high, bottom:x.low}});
+let barList = candlesticks.map(x => {return {x: x.date.getTime(), y: x.volume, delta:deltaSecond * 1000}});
 
 // Define all layers
 let candlestickLayer = new SimpleTimeChart.CandlestickLayer(candlesticks, {
@@ -92,11 +93,16 @@ let bandLayer = new SimpleTimeChart.BandLayer(bandStepList, {
     color: "#FFFFFF",
     opacity: 0.2,
 });
+let histLayer = new SimpleTimeChart.HistogramLayer(barList, {
+    color: "#FFFFFF",
+    opacity: 0.5,
+});
 
 // Add Layers to the Chart you want
 chart.addLayer(candlestickLayer);
 secondChart.addLayer(lineLayer);
 secondChart.addLayer(bandLayer);
+volumeChart.addLayer(histLayer);
 ```
 
 ### Set Scales
@@ -115,6 +121,9 @@ chart.setDataScale(
 
 secondChart.setDataScale(
     SimpleTimeChart.Util.getDataScaleFromLayer(secondChart, lineLayer)
+);
+volumeChart.setDataScale(
+    SimpleTimeChart.Util.getDataScaleFromLayer(volumeChart, histLayer, 5) // 5 is the number of measure on the Y Axis
 );
 ```
 

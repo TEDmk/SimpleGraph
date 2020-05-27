@@ -42,7 +42,6 @@ let bandLayer = new SimpleTimeChart.BandLayer(bandStepList, {
     color: "#FFFFFF",
     opacity: 0.2,
 });
-
 let histLayer = new SimpleTimeChart.HistogramLayer(barList, {
     color: "#FFFFFF",
     opacity: 0.5,
