@@ -5,7 +5,11 @@
 
 ### Create the minimum HTML File
 
-First download the last SimpleTimeChart JS file, then create a blank `main.js`.
+First download the last SimpleTimeChart JS file:
+- [v0.1.0 (Standard Version)](https://github.com/TEDmk/SimpleTimeChart/releases/download/v0.1.0/simple-time-chart.js)
+- [v0.1.0 (Minified Version)](https://github.com/TEDmk/SimpleTimeChart/releases/download/v0.1.0/simple-time-chart.min.js)
+
+Create a blank `main.js`.
 
 Finally, Create a `index.html` file with the following content
 
