@@ -66,11 +66,18 @@
             chart.addLayer(candlestickLayer)
 
             let pointList = data.map(x => {return {x: x.date * 1000, y: x.close}});
-            let lineLayer = new SimpleTimeChart.LineLayer(pointList)
+            let lineLayer = new SimpleTimeChart.LineLayer(pointList,{
+                color: "#ff0",
+                thickness: 2,
+                opacity: 1,
+            })
             chart2.addLayer(lineLayer)
 
             let bandStepList = data.map(x => {return {x: x.date * 1000, top: x.high, bottom:x.low}});
-            let bandLayer = new SimpleTimeChart.BandLayer(bandStepList);
+            let bandLayer = new SimpleTimeChart.BandLayer(bandStepList, {
+                color: "#FFFFFF",
+                opacity: 0.2,
+            });
             chart.addLayer(bandLayer);
 
             chartContainer.draw();
