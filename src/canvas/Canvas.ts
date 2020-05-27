@@ -1,5 +1,3 @@
-import { defaultCanvasStyle, CanvasStyle } from "./Style"
-
 enum MouseState {
     Drag = 2,
     Up = 1,
@@ -27,9 +25,8 @@ export abstract class Canvas {
 
     protected screenPosition: Position;
 
-    constructor(width: number, height: number, private style: CanvasStyle = defaultCanvasStyle) {
+    constructor(width: number, height: number) {
         let ratio = 2;
-
         this.canvas = <HTMLCanvasElement>document.createElement("canvas");
         this.context = this.canvas.getContext("2d");
 
@@ -65,7 +62,7 @@ export abstract class Canvas {
         return this.canvas
     }
 
-    protected drawLine(points: Array<Position>, color: string = this.getStyle().color, opacity: number = 1, thickness: number = 1) {
+    protected drawLine(points: Array<Position>, color: string = "#fff", opacity: number = 1, thickness: number = 1) {
         this.context.save();
         this.context.lineWidth = thickness;
         this.context.globalAlpha = opacity;
@@ -80,7 +77,7 @@ export abstract class Canvas {
         this.context.restore();
     }
 
-    protected drawPolygon(points: Array<Position>, color: string = this.getStyle().color, opacity: number = 1) {
+    protected drawPolygon(points: Array<Position>, color: string = "#fff", opacity: number = 1) {
         this.context.save();
         this.context.globalAlpha = opacity;
         this.context.fillStyle = color
@@ -111,9 +108,9 @@ export abstract class Canvas {
         this.context.restore();
     }
 
-    protected drawText(text: string, pos: Position, font: string = "10px Arial", align: string = "left") {
+    protected drawText(text: string, pos: Position, color: string = "#fff", font: string = "10px Arial", align: string = "left") {
         this.context.textAlign = <CanvasTextAlign>align;
-        this.context.fillStyle = this.style.color
+        this.context.fillStyle = color
         this.context.font = font;
         this.context.fillText(text, pos.x, pos.y);
     }
@@ -165,10 +162,5 @@ export abstract class Canvas {
     onClick(pos: Position) : any {
         console.log("CLICK")
     }
-
-    getStyle() {
-        return this.style;
-    }
-
 
 }

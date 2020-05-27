@@ -106,6 +106,7 @@ export class ChartCanvas extends Canvas {
         return super.drawText(
             text,
             screenPos,
+            this.getStyle().color,
             font,
         )
     }
@@ -118,5 +119,9 @@ export class ChartCanvas extends Canvas {
         screenBottomRight.x -= margin.right;
         screenBottomRight.y -= margin.bottom;
         return this.drawBox(screenTopLeft, screenBottomRight, strokeColor, backgroundColor)
+    }
+
+    getStyle(){
+        return this.chart.getStyle()
     }
 }

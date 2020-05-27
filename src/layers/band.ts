@@ -1,6 +1,5 @@
-import { Layer } from "./layer";
-import { LineStyle } from "./line";
-import { defaultCanvasStyle } from "../canvas/Style";
+import { Layer } from "./Layer";
+import { LineStyle } from "./Line";
 import { Position } from "../canvas/Canvas";
 
 export class BandStep {
@@ -35,6 +34,26 @@ export class BandLayer extends Layer {
         this.stepList.push(step);
         if(this.chartCanvas)
             this.chartCanvas.draw();
+    }
+
+    getMax(){
+        return Math.max(...this.stepList.map(x => x.top));
+    }
+
+    getMin(){
+        return Math.min(...this.stepList.map(x => x.bottom));
+    }
+
+    getFirstX() {
+        return this.stepList[0].x
+    }
+
+    getSecondX() {
+        return this.stepList[1].x
+    }
+
+    getLastX() {
+        return this.stepList[this.stepList.length - 1].x
     }
 
     draw(): any {

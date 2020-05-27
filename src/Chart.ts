@@ -3,7 +3,7 @@ import { YAxisCanvas } from "./canvas/YAxisCanvas";
 import { XAxisCanvas } from "./canvas/xAxisCanvas";
 import { ChartContainer } from "./ChartContainer";
 import { DataScale, TimeScale, normalizeDataScale } from "./Scale";
-import { Layer } from "./layers/layer"
+import { Layer } from "./layers/Layer"
 
 
 export class Chart {
@@ -14,8 +14,8 @@ export class Chart {
     private layerList: Array<Layer>;
 
 
-    constructor(private chartContainer: ChartContainer, private xAxisCanvas: XAxisCanvas, private width: number, private height: number, private axisThickness: number) {
-        this.chartCanvas = new ChartCanvas(this, width, height);
+    constructor(private chartContainer: ChartContainer, private xAxisCanvas: XAxisCanvas, private height: number, private axisThickness: number) {
+        this.chartCanvas = new ChartCanvas(this, this.getWidth(), height);
         this.yAxisCanvas = new YAxisCanvas(this, axisThickness, height);
         this.layerList = new Array<Layer>();
     }
@@ -41,10 +41,9 @@ export class Chart {
         return this.chartContainer.getTimeScale();
     }
 
-    setTimeScale(timeScale: TimeScale, draw: boolean = true) {
+    setTimeScale(timeScale: TimeScale) {
         this.chartContainer.setTimeScale(timeScale);
-        if(draw)
-            this.draw();
+        this.draw();
     }
 
     addLayer(layer: Layer) {
@@ -54,6 +53,8 @@ export class Chart {
     }
 
     draw() {
+        if(!this.getDataScale() || !this.getTimeScale())
+            return
         this.chartCanvas.clear();
         this.chartCanvas.draw();
         this.yAxisCanvas.draw();
@@ -74,5 +75,17 @@ export class Chart {
 
     scaleTime(ratio: number) {
         this.chartContainer.scaleTime(ratio);
+    }
+
+    getWidth() {
+        return this.chartContainer.getWidth();
+    }
+
+    getHeight() {
+        return this.height;
+    }
+
+    getStyle(){
+        return this.chartContainer.getStyle()
     }
 }

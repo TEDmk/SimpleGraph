@@ -22,13 +22,13 @@ export class XAxisCanvas extends Canvas {
         let bar_width = this.width;
         let timeScale = this.getTimeScale()
         let divisionNumber = Math.ceil(this.width / timeScale.deltaPixel) + 1;
-        this.drawLine([{x:0, y:bar_offset}, {x:bar_width, y:bar_offset}])
+        this.drawLine([{x:0, y:bar_offset}, {x:bar_width, y:bar_offset}], this.getStyle().color)
         for(let i = -1; i <= divisionNumber; i++) {
             let pos = timeScale.pixelOffset + i * timeScale.deltaPixel;
-            this.drawLine([{x:pos, y:bar_offset}, {x:pos, y:bar_offset + offset}])
+            this.drawLine([{x:pos, y:bar_offset}, {x:pos, y:bar_offset + offset}], this.getStyle().color)
             let date = new Date(timeScale.startDate.getTime() + 1000 * i * timeScale.deltaSecond);
-            this.drawText(this._dateToHours(date), {x:pos, y:3 * offset + 10}, "10px Arial" ,"center")
-            this.drawText(this._dateToDate(date), {x:pos, y:3 * offset}, "10px Arial" ,"center")
+            this.drawText(this._dateToHours(date), {x:pos, y:3 * offset + 10}, this.getStyle().color, "10px Arial" ,"center")
+            this.drawText(this._dateToDate(date), {x:pos, y:3 * offset}, this.getStyle().color, "10px Arial" ,"center")
         }
     }
 
@@ -53,5 +53,9 @@ export class XAxisCanvas extends Canvas {
         let deltaX = currentPos.x-previousPos.x;
         this.chartContainer.scaleTime(deltaX);
         
+    }
+
+    getStyle(){
+        return this.chartContainer.getStyle()
     }
 }
