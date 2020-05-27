@@ -111,14 +111,15 @@ export class ChartCanvas extends Canvas {
         )
     }
 
-    realDrawBox(topLeft: Position, bottomRight: Position, strokeColor: string = null, backgroundColor: string = null, margin: Margin = new Margin()) {
+    realDrawBox(topLeft: Position, bottomRight: Position, strokeColor: string = null, backgroundColor: string = null, opacity: number = 1, margin: Margin = new Margin()) {
         let screenTopLeft = this.realToScreenPos(topLeft);
         let screenBottomRight = this.realToScreenPos(bottomRight);
         screenTopLeft.x += margin.left;
         screenTopLeft.y += margin.top;
         screenBottomRight.x -= margin.right;
         screenBottomRight.y -= margin.bottom;
-        return this.drawBox(screenTopLeft, screenBottomRight, strokeColor, backgroundColor)
+        console.log(opacity)
+        return this.drawBox(screenTopLeft, screenBottomRight, strokeColor, backgroundColor, opacity)
     }
 
     getStyle(){

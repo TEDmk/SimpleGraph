@@ -91,8 +91,9 @@ export abstract class Canvas {
         this.context.restore();
     }
 
-    protected drawBox(topLeft: Position, bottomRight: Position, strokeColor: string = null, backgroundColor: string = null) {
+    protected drawBox(topLeft: Position, bottomRight: Position, strokeColor: string = null, backgroundColor: string = null, opacity: number = 1) {
         this.context.save();
+        this.context.globalAlpha = opacity;
         this.context.beginPath();
         this.context.translate(0.5, 0.5);
         if(backgroundColor)

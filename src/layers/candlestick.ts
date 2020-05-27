@@ -103,6 +103,7 @@ export class CandlestickLayer extends Layer {
                 },
                 null,
                 color,
+                this.candlestickStyle.opacity,
                 {
                     left: 2,
                     right: 2,
