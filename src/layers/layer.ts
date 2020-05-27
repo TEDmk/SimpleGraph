@@ -6,6 +6,13 @@ export abstract class Layer {
 
     abstract draw(): any;
 
+    abstract getMax(): any;
+    abstract getMin(): any;
+
+    abstract getFirstX(): any;
+    abstract getSecondX(): any;
+    abstract getLastX(): any;
+
     setChartCanvas(chart: ChartCanvas) {
         this.chartCanvas = chart;
     }

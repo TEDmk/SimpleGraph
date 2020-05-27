@@ -4,6 +4,16 @@ import { Canvas } from "./canvas/Canvas";
 import { TimeScale, normalizeTimeScale } from "./Scale";
 
 
+export class ChartContainerStyle {
+    color: string;
+    backgroundColor: string;
+}
+
+let defaultStyle = {
+    color: "#D0D0D0",
+    backgroundColor: "#292F33"
+}
+
 export class ChartContainer {
 
     private charts: Array<Chart>;
@@ -13,18 +23,19 @@ export class ChartContainer {
     private xAxisRow: HTMLElement;
     private timeScale: TimeScale;
 
-    constructor(public divID: string, private width: number, private axisThickness: number) {
+    constructor(public divID: string, private width: number, private axisThickness: number, private chartContainerStyle: ChartContainerStyle = defaultStyle) {
         this.charts = new Array<Chart>();
         this.containerElement = <HTMLElement>document.getElementById(divID);
         this.xAxisCanvas = new XAxisCanvas(this, width, axisThickness);
         this.mainTable = <HTMLTableElement>document.createElement('table');
+        this.mainTable.style.background = this.getStyle().backgroundColor;
         this.mainTable.id = `${divID}-table`;
         this.containerElement.appendChild(this.mainTable)
         this.addXAxis()
     }
 
     newChart(height: number) {
-        let chart = new Chart(this, this.xAxisCanvas, this.width, height, this.axisThickness);
+        let chart = new Chart(this, this.xAxisCanvas, height, this.axisThickness);
         this.charts.push(chart);
         this.update();
         return chart
@@ -45,6 +56,8 @@ export class ChartContainer {
     }
 
     draw() {
+        if(!this.getTimeScale())
+            return
         for (let chart of this.charts) 
             chart.draw();
         this.xAxisCanvas.draw();
@@ -61,10 +74,9 @@ export class ChartContainer {
         );
     }
 
-    setTimeScale(timeScale: TimeScale, draw: boolean = true) {
+    setTimeScale(timeScale: TimeScale) {
         this.timeScale = normalizeTimeScale(timeScale);
-        if(draw)
-            this.draw();
+        this.draw();
     }
 
     getTimeScale() {
@@ -85,5 +97,13 @@ export class ChartContainer {
         scale.pixelOffset = midWidth - (midWidth - scale.pixelOffset) / scale.deltaPixel * newDeltaPixel;
         scale.deltaPixel = newDeltaPixel;
         this.setTimeScale(scale);
+    }
+
+    getWidth(){
+        return this.width
+    }
+    
+    getStyle(){
+        return this.chartContainerStyle
     }
 }

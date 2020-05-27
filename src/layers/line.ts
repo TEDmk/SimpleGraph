@@ -1,4 +1,4 @@
-import { Layer } from "./layer"
+import { Layer } from "./Layer"
 
 export class Point {
     x: number;
@@ -27,6 +27,26 @@ export class LineLayer extends Layer {
         this.pointList = pointList;
         if(this.chartCanvas)
             this.chartCanvas.draw();
+    }
+
+    getMax(){
+        return Math.max(...this.pointList.map(x => x.y));
+    }
+
+    getMin(){
+        return Math.min(...this.pointList.map(x => x.y));
+    }
+
+    getFirstX() {
+        return this.pointList[0].x
+    }
+
+    getSecondX() {
+        return this.pointList[1].x
+    }
+
+    getLastX() {
+        return this.pointList[this.pointList.length - 1].x
     }
 
     add (point: Point) {
