@@ -23,10 +23,10 @@ export class ChartCanvas extends Canvas {
         let timeScale = this.getTimeScale();
         let dataScale = this.getDataScale();
         for(let i=0; i < Math.ceil(this.height/dataScale.deltaPixel)+1; i++) {
-            this.drawLine({x:0, y: dataScale.pixelOffset + i * dataScale.deltaPixel}, {x: this.width, y: dataScale.pixelOffset + i * dataScale.deltaPixel}, this.getStyle().color, 0.2)
+            this.drawLine([{x:0, y: dataScale.pixelOffset + i * dataScale.deltaPixel}, {x: this.width, y: dataScale.pixelOffset + i * dataScale.deltaPixel}], this.getStyle().color, 0.2)
         }
         for(let i=0; i < Math.ceil(this.width/timeScale.deltaPixel)+1; i++) {
-            this.drawLine({x:timeScale.pixelOffset + i * timeScale.deltaPixel, y: 0}, {x: timeScale.pixelOffset + i * timeScale.deltaPixel, y: this.height}, this.getStyle().color, 0.2)
+            this.drawLine([{x:timeScale.pixelOffset + i * timeScale.deltaPixel, y: 0}, {x: timeScale.pixelOffset + i * timeScale.deltaPixel, y: this.height}], this.getStyle().color, 0.2)
         }
     }
 
@@ -82,12 +82,10 @@ export class ChartCanvas extends Canvas {
         return screenPosition;
     }
 
-    realDrawLine(start: Position, end: Position, color: string = this.getStyle().color, thickness: number = 1) {
-        let screenStart = this.realToScreenPos(start);
-        let screenEnd = this.realToScreenPos(end);
+    realDrawLine(points: Array<Position>,  color: string = this.getStyle().color, thickness: number = 1) {
+        let screenPoints = points.map(point => {return this.realToScreenPos(point)})
         return super.drawLine(
-            screenStart,
-            screenEnd,
+            screenPoints,
             color,
             1,
             thickness,

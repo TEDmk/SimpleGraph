@@ -39,10 +39,6 @@ export class LineLayer extends Layer {
             return
         }
         console.log(this.pointList)
-        for (let i = 0; i < this.pointList.length -1; i++) {
-            let firstPoint = this.pointList[i];
-            let secondPoint = this.pointList[i+1];
-            this.chartCanvas.realDrawLine(firstPoint, secondPoint, this.lineStyle.color, this.lineStyle.thickness)
-        }
+        this.chartCanvas.realDrawLine(this.pointList, this.lineStyle.color, this.lineStyle.thickness)
     }
 }
