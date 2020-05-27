@@ -46,14 +46,14 @@ export class CandlestickLayer extends Layer {
                 color = this.chartCanvas.getStyle().redColor;
             }
             this.chartCanvas.realDrawLine(
-                {
+                [{
                     x:candlestick.date.getTime(),
                     y:candlestick.high,
                 },
                 {
                     x:candlestick.date.getTime(),
                     y:candlestick.low,
-                },
+                }],
                 color
             )
             this.chartCanvas.realDrawBox(

@@ -8,11 +8,13 @@ export class Point {
 export class LineStyle { 
     color: string;
     thickness: number;
+    opacity: number;
 }
 
 let defaultLineStyle: LineStyle = {
     color: "#FFFFFF",
     thickness: 3,
+    opacity: 1,
 }
 
 export class LineLayer extends Layer {
@@ -38,11 +40,6 @@ export class LineLayer extends Layer {
             console.log("can't draw without ChartCanvas, please use setChartCanvas to set it.")
             return
         }
-        console.log(this.pointList)
-        for (let i = 0; i < this.pointList.length -1; i++) {
-            let firstPoint = this.pointList[i];
-            let secondPoint = this.pointList[i+1];
-            this.chartCanvas.realDrawLine(firstPoint, secondPoint, this.lineStyle.color, this.lineStyle.thickness)
-        }
+        this.chartCanvas.realDrawLine(this.pointList, this.lineStyle.color, this.lineStyle.opacity, this.lineStyle.thickness)
     }
 }
